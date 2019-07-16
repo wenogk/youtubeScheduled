@@ -1,0 +1,58 @@
+<div style="width:90%;height:90%;" id="ytplayer"></div>
+<script>
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  var player;
+
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayer', {
+      height: '360',
+      width: '640',
+      videoId: 'oK_rLUl2_8w',
+      autoplay:1,
+       events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+timer = (hour,minute,second) => 
+{
+  var t = new Date();
+  t.setHours(hour);
+  t.setMinutes(minute);
+  t.setSeconds(second);
+  t.setMilliseconds(0);
+  return t;
+}
+
+ 
+schedulePlay = (hour,minute,second,videoid) => {
+  var timetarget = timer(hour,minute,second).getTime();
+var timenow =  new Date().getTime();
+var offsetmilliseconds = timetarget - timenow;
+if (offsetmilliseconds >= 0){
+setTimeout(function(){player.loadVideoById(videoid);}, offsetmilliseconds);
+}
+}
+schedulePlaylist = (hour,minute,second,playlistid) => {
+  var timetarget = timer(hour,minute,second).getTime();
+var timenow =  new Date().getTime();
+var offsetmilliseconds = timetarget - timenow;
+if (offsetmilliseconds >= 0){
+setTimeout(function(){player.loadPlaylist(playlistid);}, offsetmilliseconds);
+}
+}
+
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+      player.seekTo(0);
+      player.playVideo();
+    }
+  }
+schedulePlay(16,45,20,'F2MMLLsMFao');
+schedulePlay(16,45,30,'F2MMLLsMFao');
+schedulePlay(16,45,40,'8WaTd3z8sHE');
+
+</script>
